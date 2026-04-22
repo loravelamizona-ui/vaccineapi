@@ -11,9 +11,12 @@ app = Flask(__name__)
 # ==========================================
 API_TOKEN = "kTmWP2MEJ9dIyeMtACHhMmo8Wk72rQFjhBJDhS2Kaj5ySdjhBESKFiLVH2AMyqZl"
 
-# Update these paths to your actual folders
-BASE_PATH = r"C:\Users\user1\.venv\api\csv"
-MODEL_PATH = r"C:\Users\user1\.venv\api\models"
+# This gets the directory where vaccineApi.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Update your paths to be relative to the BASE_DIR
+BASE_PATH = os.path.join(BASE_DIR, "csv")
+MODEL_PATH = os.path.join(BASE_DIR, "models")
 
 VACCINE_MAP = {
     "1": {"name": "Human Papillomavirus (HPV) Vaccine", "csv": "HPV.csv", "model": "hpv_model.pkl"},
