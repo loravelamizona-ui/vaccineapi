@@ -19,19 +19,19 @@ BASE_PATH = os.path.join(BASE_DIR, "csv")
 MODEL_PATH = os.path.join(BASE_DIR, "models")
 
 VACCINE_MAP = {
-    "1": {"name": "Human Papillomavirus (HPV) Vaccine", "csv": "HPV.csv", "model": "hpv_model.pkl"},
-    "2": {"name": "Influenza Vaccine", "csv": "Influenza.csv", "model": "influenza_model.pkl"},
-    "3": {"name": "Pneumococal Vaccine", "csv": "Pneumococal.csv", "model": "pneumococal_model.pkl"},
+    # "1": {"name": "Human Papillomavirus (HPV) Vaccine", "csv": "HPV.csv", "model": "hpv_model.pkl"},
+    # "2": {"name": "Influenza Vaccine", "csv": "Influenza.csv", "model": "influenza_model.pkl"},
+    # "3": {"name": "Pneumococal Vaccine", "csv": "Pneumococal.csv", "model": "pneumococal_model.pkl"},
     "4": {"name": "Pneumococal Conjugate Vaccine (PCV)", "csv": "PCV.csv", "model": "pcv_model.pkl"},
     "5": {"name": "Inactivated Polio Vaccine (IPV)", "csv": "IPV.csv", "model": "ipv_model.pkl"},
     "6": {"name": "Measles, Mumps and Rubella Vaccine (MMR)", "csv": "MMR.csv", "model": "mmr_model.pkl"},
     "7": {"name": "Pentavalent Vaccine (DPT-Hep B-HiB)", "csv": "Pentavalent.csv", "model": "penta_model.pkl"},
     "8": {"name": "Oral Polio Vaccine (OPV)", "csv": "OPV.csv", "model": "opv_model.pkl"},
     "9": {"name": "Bacille Calmette-Guerin Vaccine (BCG)", "csv": "BCG.csv", "model": "bcg_model.pkl"},
-    "10": {"name": "Hepatitis B Vaccine", "csv": "Hepatitis_B.csv", "model": "hepatitis_b_model.pkl"},
-    "11": {"name": "Tetanus-Diphtheria Vaccine", "csv": "Tetanus_Diphtheria.csv", "model": "tetanus_diphtheria_model.pkl"},
-    "12": {"name": "Vitamin K", "csv": "Vitamin_K.csv", "model": "vitamin_k_model.pkl"},
-    "13": {"name": "Measles-Rubella Vaccine", "csv": "Measles_Rubella.csv", "model": "measles_rubella_model.pkl"}
+    # "10": {"name": "Hepatitis B Vaccine", "csv": "Hepatitis_B.csv", "model": "hepatitis_b_model.pkl"},
+    # "11": {"name": "Tetanus-Diphtheria Vaccine", "csv": "Tetanus_Diphtheria.csv", "model": "tetanus_diphtheria_model.pkl"},
+    # "12": {"name": "Vitamin K", "csv": "Vitamin_K.csv", "model": "vitamin_k_model.pkl"},
+    # "13": {"name": "Measles-Rubella Vaccine", "csv": "Measles_Rubella.csv", "model": "measles_rubella_model.pkl"}
 }
 
 def token_required(f):
