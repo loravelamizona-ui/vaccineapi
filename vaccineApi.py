@@ -9,7 +9,7 @@ app = Flask(__name__)
 # ==========================================
 # 1. SETTINGS & SECURITY
 # ==========================================
-API_TOKEN = "your-super-secret-vaccine-token-123"
+API_TOKEN = "kTmWP2MEJ9dIyeMtACHhMmo8Wk72rQFjhBJDhS2Kaj5ySdjhBESKFiLVH2AMyqZl"
 
 # Update these paths to your actual folders
 BASE_PATH = r"C:\Users\user1\.venv\api\csv"
