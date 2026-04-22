@@ -25,7 +25,7 @@ VACCINE_MAP = {
     "4": {"name": "Pneumococal Conjugate Vaccine (PCV)", "csv": "PCV.csv", "model": "pcv_model.pkl"},
     "5": {"name": "Inactivated Polio Vaccine (IPV)", "csv": "IPV.csv", "model": "ipv_model.pkl"},
     "6": {"name": "Measles, Mumps and Rubella Vaccine (MMR)", "csv": "MMR.csv", "model": "mmr_model.pkl"},
-    "7": {"name": "Pentavalent Vaccine (DPT-Hep B-HiB)", "csv": "Pentavalent.csv", "model": "penta_model.pkl"},
+    "7": {"name": "Pentavalent Vaccine (DPT-Hep B-HiB)", "csv": "Penta.csv", "model": "penta_model.pkl"},
     "8": {"name": "Oral Polio Vaccine (OPV)", "csv": "OPV.csv", "model": "opv_model.pkl"},
     "9": {"name": "Bacille Calmette-Guerin Vaccine (BCG)", "csv": "BCG.csv", "model": "bcg_model.pkl"},
     # "10": {"name": "Hepatitis B Vaccine", "csv": "Hepatitis_B.csv", "model": "hepatitis_b_model.pkl"},
