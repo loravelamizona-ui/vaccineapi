@@ -18,20 +18,23 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_PATH = os.path.join(BASE_DIR, "csv")
 MODEL_PATH = os.path.join(BASE_DIR, "models")
 
+# BASE_PATH = r"C:\Users\user1\.venv\ArimaDatasets"
+# MODEL_PATH = r"C:\Users\user1\.venv\ArimaTraining\models"
+
 VACCINE_MAP = {
-    # "1": {"name": "Human Papillomavirus (HPV) Vaccine", "csv": "HPV.csv", "model": "hpv_model.pkl"},
-    # "2": {"name": "Influenza Vaccine", "csv": "Influenza.csv", "model": "influenza_model.pkl"},
-    # "3": {"name": "Pneumococal Vaccine", "csv": "Pneumococal.csv", "model": "pneumococal_model.pkl"},
+    "1": {"name": "Human Papillomavirus (HPV) Vaccine", "csv": "HPV.csv", "model": "hpv_model.pkl"},
+    "2": {"name": "Influenza Vaccine", "csv": "INFLUENZA.csv", "model": "influenza_model.pkl"},
+    "3": {"name": "Pneumococal Vaccine", "csv": "PC.csv", "model": "pc_model.pkl"},
     "4": {"name": "Pneumococal Conjugate Vaccine (PCV)", "csv": "PCV.csv", "model": "pcv_model.pkl"},
     "5": {"name": "Inactivated Polio Vaccine (IPV)", "csv": "IPV.csv", "model": "ipv_model.pkl"},
     "6": {"name": "Measles, Mumps and Rubella Vaccine (MMR)", "csv": "MMR.csv", "model": "mmr_model.pkl"},
     "7": {"name": "Pentavalent Vaccine (DPT-Hep B-HiB)", "csv": "Penta.csv", "model": "penta_model.pkl"},
     "8": {"name": "Oral Polio Vaccine (OPV)", "csv": "OPV.csv", "model": "opv_model.pkl"},
     "9": {"name": "Bacille Calmette-Guerin Vaccine (BCG)", "csv": "BCG.csv", "model": "bcg_model.pkl"},
-    # "10": {"name": "Hepatitis B Vaccine", "csv": "Hepatitis_B.csv", "model": "hepatitis_b_model.pkl"},
-    # "11": {"name": "Tetanus-Diphtheria Vaccine", "csv": "Tetanus_Diphtheria.csv", "model": "tetanus_diphtheria_model.pkl"},
-    # "12": {"name": "Vitamin K", "csv": "Vitamin_K.csv", "model": "vitamin_k_model.pkl"},
-    # "13": {"name": "Measles-Rubella Vaccine", "csv": "Measles_Rubella.csv", "model": "measles_rubella_model.pkl"}
+    "10": {"name": "Hepatitis B Vaccine", "csv": "HBV.csv", "model": "hbv_model.pkl"},
+    "11": {"name": "Tetanus-Diphtheria Vaccine", "csv": "TDV.csv", "model": "tdv_model.pkl"},
+    "12": {"name": "Vitamin K", "csv": "VK.csv", "model": "vk_model.pkl"},
+    "13": {"name": "Measles-Rubella Vaccine", "csv": "MRV.csv", "model": "mrv_model.pkl"}
 }
 
 def token_required(f):
@@ -101,9 +104,22 @@ def predict():
                 df_existing.to_csv(current_csv, header=True, index=False)
 
                 # --- STEP D: FORECASTING ---
-                df_model = df_existing.set_index('Date').asfreq('MS').fillna(0)
+                # Check if you want to predict on the payload data ONLY
+                # (Assuming you send a payload key like "predict_on_payload_only": True)
+                if content.get("predict_on_payload_only", False):
+                    # Convert the payload records directly to a dataframe
+                    df_payload = pd.DataFrame(records)
+                    df_payload['date'] = pd.to_datetime(df_payload['date'])
+                    df_payload = df_payload.set_index('date').asfreq('MS').fillna(0)
+                    target_data = df_payload['count']
+                else:
+                    # Default: Use the full appended master CSV
+                    df_model = df_existing.set_index('Date').asfreq('MS').fillna(0)
+                    target_data = df_model['Count']
+
+
                 model_fit = joblib.load(current_model)
-                updated_results = model_fit.apply(df_model['Count'])
+                updated_results = model_fit.apply(target_data)
                 
                 # Get the number of steps from payload, default to 1
                 num_steps = content.get('steps', 1)
