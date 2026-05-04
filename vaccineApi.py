@@ -75,27 +75,31 @@ def predict():
                 current_model = os.path.join(MODEL_PATH, v_info["model"])
 
                 # --- STEP A: READ CSV SAFELY ---
+                # We use skiprows=1 to avoid trying to parse the header 'Date' as a date
                 df_existing = pd.read_csv(current_csv, header=None, names=['Date', 'Count'], skiprows=1)
                 df_existing['Date'] = pd.to_datetime(df_existing['Date'])
                 
-                # --- STEP B: UPDATE IF EXIST, APPEND IF NEW ---
+                # Identify the current latest date in the file
+                latest_date_in_file = df_existing['Date'].max()
+
+                # --- STEP B: UPDATE OR APPEND ---
                 for rec in records:
                     new_date = pd.to_datetime(rec['date'])
                     new_count = int(rec['count'])
 
-                    # Check if the exact date is already in the CSV
-                    date_exists = df_existing['Date'] == new_date
-
-                    if date_exists.any():
-                        # The date exists -> Update the Count with the new total
-                        df_existing.loc[date_exists, 'Count'] = new_count
-                    else:
-                        # The date does not exist -> Append it as a new row
+                    if new_date == latest_date_in_file:
+                        # Update the latest month's count
+                        df_existing.loc[df_existing['Date'] == new_date, 'Count'] = new_count
+                    elif new_date > latest_date_in_file:
+                        # Append new future month
                         new_row = pd.DataFrame({'Date': [new_date], 'Count': [new_count]})
                         df_existing = pd.concat([df_existing, new_row], ignore_index=True)
+                        latest_date_in_file = new_date # Update tracker for next record in payload
+                    else:
+                        # Ignore historical data changes
+                        continue 
 
-                # --- STEP C: SORT AND SAVE UPDATED CSV ---
-                # Sort by date so ARIMA doesn't break from disordered time intervals
+                # --- STEP C: SAVE UPDATED CSV ---
                 df_existing.sort_values('Date', inplace=True)
                 df_existing.to_csv(current_csv, header=True, index=False)
 
